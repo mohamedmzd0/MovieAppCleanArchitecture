@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true">
+    <data>
 
-    <RelativeLayout
+        <variable
+            name="movie"
+            type="com.mohamed.movieappcleanarchitecture.domain.movie_details.entity.MovieDetailsResponse" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
 
-        <ImageView
-            android:id="@+id/iv_movies_poster"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="200dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#3B000000" />
+            <ImageView
+                android:id="@+id/iv_movies_poster"
+                android:layout_width="match_parent"
+                loadImage="@{`https://image.tmdb.org/t/p/w500/`+movie.poster_path}"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/tv_movies_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:padding="4dp"
-            android:textColor="@color/white" />
-    </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#3B000000" />
+
+            <TextView
+                android:id="@+id/tv_movies_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@id/rating_bar"
+                android:padding="4dp"
+                android:text="@{movie.title}"
+                android:textColor="@color/white" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:numStars="10"
+                android:stepSize=".5"
+                android:rating="@{movie.vote_average}" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

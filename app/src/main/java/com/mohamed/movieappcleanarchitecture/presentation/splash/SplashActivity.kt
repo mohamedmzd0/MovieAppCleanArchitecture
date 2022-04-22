@@ -1,7 +1,6 @@
 package com.mohamed.movieappcleanarchitecture.presentation.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,6 +23,7 @@ class SplashActivity : BaseActivity() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_splash, null, false)
         setContentView(binding?.root)
         setupHandler()
+
 
     }
 

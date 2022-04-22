@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class MoviesRepositoryImp @Inject constructor(val moviesApi: MoviesApi) : MoviesRepository {
 
-    override suspend fun getMovies(): Flow<Resources<MoivesResponse>> {
+/*    override suspend fun getMovies(): Flow<Resources<MoivesResponse>> {
         return flow {
             emit(Resources.OnLoading<MoivesResponse>())
             kotlin.runCatching {
@@ -23,5 +23,9 @@ class MoviesRepositoryImp @Inject constructor(val moviesApi: MoviesApi) : Movies
                 emit(Resources.OnError<MoivesResponse>(throwable = it))
             }
         }
+    }*/
+
+    override suspend fun getMovies(page: Int): MoivesResponse {
+        return moviesApi.getMovies(Constants.API_KEY,page)
     }
 }
