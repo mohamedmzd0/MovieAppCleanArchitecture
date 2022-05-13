@@ -2,12 +2,9 @@ package com.mohamed.movieappcleanarchitecture.data.main_movies.repository
 
 import com.mohamed.movieappcleanarchitecture.data.main_movies.remote.api.MoviesApi
 import com.mohamed.movieappcleanarchitecture.domain.main_movies.MoviesRepository
-import com.mohamed.movieappcleanarchitecture.domain.main_movies.entity.MoivesResponse
 import com.mohamed.movieappcleanarchitecture.infrastructure.utils.Constants
-import com.mohamed.movieappcleanarchitecture.infrastructure.utils.Resources
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MoviesRepositoryImp @Inject constructor(val moviesApi: MoviesApi) : MoviesRepository {
@@ -25,7 +22,7 @@ class MoviesRepositoryImp @Inject constructor(val moviesApi: MoviesApi) : Movies
         }
     }*/
 
-    override suspend fun getMovies(page: Int): MoivesResponse {
-        return moviesApi.getMovies(Constants.API_KEY,page)
-    }
+    override suspend fun getMovies(page: Int) =
+        withContext(Dispatchers.IO) { moviesApi.getMovies(Constants.API_KEY, page) }
+
 }

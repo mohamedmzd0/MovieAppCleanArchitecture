@@ -1,9 +1,8 @@
 package com.mohamed.movieappcleanarchitecture.presentation.home
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -30,20 +29,24 @@ class MainActivity : BaseActivity(), MoviesAdapter.OnMovieClickListener {
         setContentView(binding?.root)
 
         setupRecyclerView()
-
+        onRefresh()
         setupObserver()
         invokeApi()
     }
 
     private fun invokeApi() {
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenResumed {
             viewModel.movies.collect {
                 moviesAdapter.submitData(it)
+                Log.d(TAG, "invokeApi: size of list ${moviesAdapter.itemCount}")
+
             }
         }
     }
 
     override fun setupObserver() {
+
+
         moviesAdapter.addLoadStateListener {
             if (it.refresh is LoadState.Loading)
                 showLoading()
@@ -54,7 +57,7 @@ class MainActivity : BaseActivity(), MoviesAdapter.OnMovieClickListener {
 
 
         }
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenResumed {
             viewModel.movlies.collect { it ->
                 when (it.states) {
                     States.LOADING -> showLoading()
@@ -90,6 +93,9 @@ class MainActivity : BaseActivity(), MoviesAdapter.OnMovieClickListener {
         }
     }
 
+    private fun onRefresh() {
+        binding?.btnRefresh?.setOnClickListener { moviesAdapter.refresh() }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -100,3 +106,49 @@ class MainActivity : BaseActivity(), MoviesAdapter.OnMovieClickListener {
         MovieDetailsActivity.newInstance(this, movieId)
     }
 }
+
+
+/*
+data class SomeOne(var name: String, var age: Int, var job: String)
+
+fun main() {
+    val list = listOf(
+        SomeOne("Ali", 20, "web developer"),
+        SomeOne("Ahmed", 10, "Tester"),
+        SomeOne("Mohamed", 18, "Ios Developer"),
+        SomeOne("Mahmoud", 24, "Android developer"),
+    )
+    sort(list)
+    filter(list)
+    map(list)
+}
+
+fun sort(list: List<SomeOne>) {
+    println("sorting")
+    // re order current list by numbers or alphabitics
+    val sortedList = list.sortedByDescending { it.age }
+//    val sortedList = list.sortedBy { it.age }
+    println(sortedList)
+}
+
+fun map(list: List<SomeOne>) {
+    println("mapping")
+// create only list of ages
+    val mappedList = list.map { it.age }
+    println(mappedList)
+}
+
+fun filter(list: List<SomeOne>) {
+    println("filtering")
+// get only members with age >= 20
+    val mappedList = list.filter { it.age >= 20 }
+    println(mappedList)
+}
+
+fun reduce() {
+
+}
+
+fun combination() {
+
+}*/

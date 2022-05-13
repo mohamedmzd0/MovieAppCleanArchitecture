@@ -39,7 +39,7 @@ class MovieDetailsActivity : BaseActivity() {
 
 
     override fun setupObserver() {
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenResumed {
             viewModel.getMovie(id = intent.getIntExtra("movie_id", -1)).collect {
                 if (it.states == States.SUCCESS) {
                     binding.movie = it.data

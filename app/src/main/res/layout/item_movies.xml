@@ -16,12 +16,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="400dp">
 
             <ImageView
                 android:id="@+id/iv_movies_poster"
-                android:layout_width="match_parent"
                 loadImage="@{`https://image.tmdb.org/t/p/w500/`+movie.poster_path}"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
@@ -49,8 +49,15 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:numStars="10"
-                android:stepSize=".5"
-                android:rating="@{movie.vote_average}" />
+                android:rating="@{movie.vote_average}"
+                android:stepSize=".5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="@{String.valueOf(movie.id)}"
+                android:textColor="@color/white" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 

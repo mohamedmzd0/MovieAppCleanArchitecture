@@ -17,8 +17,7 @@ class MovieDetailsViewModel @Inject constructor(private val movieDetailsUseCase:
     ViewModel() {
 
 
-    fun getMovie(id: Int): Flow<Resources<MovieDetailsResponse>> {
-        return flow {
+    fun getMovie(id: Int)= flow {
             emit(Resources.OnLoading())
             kotlin.runCatching {
                 movieDetailsUseCase.getMovie(id)
@@ -29,4 +28,3 @@ class MovieDetailsViewModel @Inject constructor(private val movieDetailsUseCase:
             }
         }
     }
-}
